@@ -8,7 +8,7 @@ const valuesSchemsa =  Yup.object({
     name: Yup.string().min(2).max(25).required("Please enter your name"),
     email: Yup.string().email().required("Please enter your email"),
     password:Yup.string().min(6).required("Please enter your password"),
-    password2:Yup.string().required().oneOf([Yup.ref("password"),null],"Password don´t matched")
+    password2:Yup.string().required("Please enter your password").oneOf([Yup.ref("password"),null],"Password don´t matched")
 })
 
 
@@ -23,7 +23,7 @@ const initialValues = {
 
 const FormikYup = () => {       
 
-  const {values, errors, handleBlur , handleChange, handleSubmit} = useFormik({
+  const {values, errors, handleBlur , handleChange, handleSubmit, touched} = useFormik({
             initialValues: initialValues,
             validationSchema:valuesSchemsa,
             onSubmit:(values,action) => {
@@ -37,7 +37,7 @@ const FormikYup = () => {
 
   return (
 
-    <div className="container">´
+    <div className="container">
 
     <form id="form" onSubmit={handleSubmit}>
 
@@ -53,7 +53,7 @@ const FormikYup = () => {
               onBlur={handleBlur}
 
                />
-            <div className="error-message">{errors.name} </div>
+             {errors.name && touched.name ?  <div className="msg-error">{errors.name} </div> : ""}
         </div>
 
         <div className="input-field">
@@ -65,7 +65,7 @@ const FormikYup = () => {
               value={values.email}
               onChange={handleChange }
               onBlur={handleBlur}/>
-            <div className="error-message">{errors.email} </div>
+           {errors.email && touched.email ?  <div className="msg-error">{errors.email} </div> : ""}
         </div>
 
         <div className="input-field">
@@ -78,7 +78,7 @@ const FormikYup = () => {
               onChange={handleChange }
               onBlur={handleBlur}
                />
-            <div className="error-message">{errors.password} </div>
+             {errors.password && touched.password ?  <div className="msg-error">{errors.password} </div> : ""}
         </div>
 
         <div className="input-field">
@@ -91,7 +91,7 @@ const FormikYup = () => {
              onChange={handleChange }
              onBlur={handleBlur}
              />
-            <div className="error-message">{errors.password2} </div>
+             {errors.password2 && touched.password2 ?  <div className="msg-error">{errors.password2} </div> : ""}
         </div>
         <button type="submit">Sign Up</button>
     </form>

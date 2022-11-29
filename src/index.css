@@ -67,3 +67,9 @@ body {
     font-weight: bold;
     margin: 5px 0;
 }
+
+.msg-error{
+    color: red;
+    font-size: 15px;
+    padding: 2px 0;
+}
